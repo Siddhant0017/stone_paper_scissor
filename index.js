@@ -123,6 +123,11 @@ function clearHighlights() {
   computerHighlight3.classList.remove("winner-box-3");
 }
 
+// Add these variables at the top with your other DOM elements
+const winAnimation = document.getElementById("win-animation");
+const loseAnimation = document.getElementById("lose-animation");
+
+// Update your resetDisplayStyles function
 function resetDisplayStyles() {
   outcomeDisplay.style.marginTop = "3rem";
 
@@ -138,9 +143,13 @@ function resetDisplayStyles() {
   outcomeSubtext.style.display = "block";
   restartBtn.style.display = "none";
   proceedBtn.style.display = "none";
+  
+  // Hide animations
+  if (winAnimation) winAnimation.style.display = "none";
+  if (loseAnimation) loseAnimation.style.display = "none";
 }
 
-// Main Game Logic
+// Update the initiateGame function to show animations
 const initiateGame = (playerSelection) => {
   const computerChoice = getComputerChoice();
   resetDisplayStyles();
@@ -172,12 +181,24 @@ const initiateGame = (playerSelection) => {
     proceedBtn.style.display = "block";
     highlightPlayerWin();
     gameScore.user++;
+    
+    // Show win animation
+    if (winAnimation) {
+      winAnimation.style.display = "block";
+      if (loseAnimation) loseAnimation.style.display = "none";
+    }
   }
   else {
     // Handle computer win
     outcome = gameOutcome.LOST;
     highlightComputerWin();
     gameScore.computer++;
+    
+    // Show lose animation
+    if (loseAnimation) {
+      loseAnimation.style.display = "block";
+      if (winAnimation) winAnimation.style.display = "none";
+    }
   }
 
   // Update display
